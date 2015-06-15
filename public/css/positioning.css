@@ -1,0 +1,53 @@
+.boxes {
+	width: 50px;
+	height: 50px;
+	padding: 10px;
+	border: 1px solid black;
+	margin: 25px;
+	float: left;
+	position: relative;
+	color: white;
+}
+h1 {
+	margin: 50px;
+	left: 300px;
+	position: relative;
+}
+.clearfix {
+	clear: both;
+}
+.ribbon {
+	position: fixed;
+	top: 1px;
+	right: 1px;
+}
+.arrow {
+	position: absolute;
+	top: -40px;
+	left: 50px;
+}
+#margin {
+	height: 560px;
+	width: 400px;
+	margin-left: auto;
+	margin-right: auto;
+}
+.red {
+	background-color: red;
+}
+.orange {
+	background-color: orange;
+}
+.yellow {
+	background-color: yellow;
+	color: black;
+}
+.green {
+	background-color: green;
+}
+.blue {
+	background-color: blue;
+}
+.purple {
+	background-color: purple;
+}

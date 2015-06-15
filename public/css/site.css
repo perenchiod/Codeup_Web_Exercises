@@ -1,0 +1,59 @@
+/*
+this content is stored in a file named "site.css"
+in a directory named "css" in the web root
+*/
+
+h1 {
+	color: blue;
+	text-decoration: underline;
+}
+h1:hover {
+	color: yellow;
+}
+
+h2 {
+	color: green;
+	text-decoration: underline;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+h3 {
+	color: red;
+	text-decoration: underline;
+}
+body {
+	font-family: "Source Sans Pro", Arial, Times;
+	background-image: url("/img/texture.jpeg");
+	background color: rgba(170,200,250,.8);
+	margin-left: 20px;
+}
+
+li	{
+	list-style-type: upper-roman;
+}
+a:link {
+	color: yellow;
+}	
+a:visited {
+	color: rgb(148, 255, 255);
+}
+#Mazda:hover {
+	opacity: .7;
+}
+th {
+	padding: 15px;
+	font-family: Arial;
+}
+tr {
+	padding: 15px;
+	font-family: Times;
+	border-color: red;
+}
+#table {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+
+
