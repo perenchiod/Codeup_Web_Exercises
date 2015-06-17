@@ -1,0 +1,39 @@
+<html>
+<head>
+	<title>User Interaction Exercise</title>
+</head>
+<body>
+
+<script>
+	// todo: Ask the user for their name.
+	// Keep asking if an empty input is provided.
+	do {
+		var nameAnswer = prompt ("What is your name?");
+	}while(!nameAnswer);
+	// todo: Show an alert message that welcomes the user based on their input.
+	var welcome = alert ("Hello " + nameAnswer + "! Welcome to Value Town")
+
+	// todo: Ask the user if they like pizza.
+	// Based on their answer show a creative alert message.
+
+	var pizzaAnswer = prompt("Do you like Pizza? Type yes or no to answer: ");
+	
+	do{
+		if(pizzaAnswer == "yes" )
+		{
+			alert ("Nice! I like pizza too");
+			break;
+		}
+		else if (pizzaAnswer == "no")
+		{
+			alert ("You don't like pizza?!");
+			break;
+		}
+
+		}while(pizzaAnswer == "yes" || pizzaAnswer 	== "no");
+
+
+</script>
+	
+</body>
+</html>
