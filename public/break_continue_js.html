@@ -5,9 +5,14 @@
 <body>
 
 <script>
+	
+	var random = Math.floor((Math.random()*50)+1);
+
 	do{
-		var random = Math.floor((Math.random()*50)+1);
+		random = Math.floor((Math.random()*50)+1);
 	 }while(random % 2 == 0);
+
+	 console.log("The randomly selected odd number is: " + random);
 	 
 	 for(var i = 1; i < 50; i++)
 	 {
@@ -18,12 +23,12 @@
 
 	 	if(random == i)
 	 	{
-	 		console.log("Yikes! Skipping this number.");
+	 		console.log("Yikes! Skipping this number: " + i);
 	 		continue;
 	 	}
 	 	console.log("Here is a odd number " + i);
 	 }
-	 
+
 </script>
 
 </body>
