@@ -1,29 +1,29 @@
 <html>
 <head>
-	<title>Array practice</title>
+    <title>Array practice</title>
 </head>
 <body>
 
 <script>
-	"use strict";
-	
-	// todo:
-	// Create an array of 4 names using literal array notation, in a variable called 'names'.
-	var names = ["Jon", "Jones", "Joe", "Josh"];
-	
-	// todo:
-	// Create a log statement that will log the number of elements in the names array.
-	console.log(names.length);
-	
-	// todo:
-	// Create log statements that will print each of the names array elements individually.
-	for (var i = names.length; i >= 0; i--) {
-		console.log(names[i] + ": " + i);
-	}
+    "use strict";
 
-	names.forEach(function (element, index, array) {
-		console.log(names[index]);
-	});
+    // todo:
+    // Create an array of 4 names using literal array notation, in a variable called 'names'.
+    var names = ["Jon", "Jones", "Joe", "Josh"];
+    
+    // todo:
+    // Create a log statement that will log the number of elements in the names array.
+    console.log("Number of elements in the array: " + names.length);
+    
+    // todo:
+    // Create log statements that will print each of the names array elements individually.
+    for (var i = names.length - 1; i >= 0; i--) {
+        console.log(names[i] + ": " + i);
+    }
+
+    names.forEach(function (element, index, array) {
+        console.log(names[index]);
+    });
 </script>
 
 </body>
