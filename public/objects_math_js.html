@@ -1,0 +1,34 @@
+<html>
+<head>
+    <title>Math Object exercise</title>
+</head>
+<body>
+
+<script>
+    "use strict";
+    var circle = {
+        radius: 3,
+        getArea: function () {
+            return Math.PI * Math.pow(this.radius, 2); 
+        },
+       
+        logInfo: function (round) {
+            var area = circle.getArea();
+            if (round === true) {
+                area = Math.round(area);
+            }   
+                console.log('Area of a circle with radius: ' + this.radius + ', is: ' + area);
+            }
+    };
+  
+    circle.logInfo(false);
+    circle.logInfo(true);
+    
+    circle.radius = 5;
+    
+    circle.logInfo(false);
+    circle.logInfo(true);
+</script>
+
+</body>
+</html>
