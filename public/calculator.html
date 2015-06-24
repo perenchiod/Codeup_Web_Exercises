@@ -1,0 +1,124 @@
+<html>
+<head>
+	<title>Javascript Calculator</title>
+	<link rel="stylesheet" type="text/css" href="/css/calculator.css">
+</head>
+<body>
+	<form name = "Calculator">
+		<div class = "box">
+
+			<input type= "text" class = "numberBox" id = "left-operand" placeholder = "First number" selected readonly>
+			<input type= "text" class = "operatorBox" id = "operator" placeholder = "Operator" maxlength = "1" readonly>
+			<input type= "text" class = "numberBox" id = "right-operand" placeholder = "Second number" readonly>
+
+			<button type="button" id= "btn1" value= 1 class = "buttons">1</button>
+			<button type="button" id= "btn2" value= 2 class = "buttons">2</button>
+			<button type="button" id= "btn3" value= 3 class = "buttons">3</button>
+			<button type="button" id= "plus" value= + class = "buttons">+</button>
+
+			<button type="button" id= "btn4" value= 4 class = "buttons">4</button>
+			<button type="button" id= "btn5" value= 5 class = "buttons">5</button>
+			<button type="button" id= "btn6" value= 6 class = "buttons">6</button>
+			<button type="button" id= "minus" value= - class = "buttons">-</button>
+
+			<button type="button" id= "btn7" value= 7 class = "buttons">7</button>
+			<button type="button" id= "btn8" value= 8 class = "buttons">8</button>
+			<button type="button" id= "btn9" value= 9 class = "buttons">9</button>
+			<button type="button" id= "multiply" value= * class = "buttons">*</button>
+
+			<button type="button" id= "btnC" value="C" class = "buttons">C</button>
+			<button type="button" id= "btn0" value="0" class = "buttons">0</button>
+			<button type="button" id= "equals" value="=" class = "buttons">=</button>
+			<button type="button" id= "divide" value= / class = "buttons">/</button>
+		</div>
+	</form>
+
+	<script>
+	"use strict";
+	var leftBox = "";
+	var operator = "";
+	var rightBox = "";
+	var answer = "";
+	var btn1 = document.getElementById("btn1");
+	var btn2 = document.getElementById("btn2");
+	var btn3 = document.getElementById("btn3");
+	var btn4 = document.getElementById("btn4");
+	var btn5 = document.getElementById("btn5");
+	var btn6 = document.getElementById("btn6");
+	var btn7 = document.getElementById("btn7");
+	var btn8 = document.getElementById("btn8");
+	var btn9 = document.getElementById("btn9");
+    var btn0 = document.getElementById("btn0");
+	var plusOp = document.getElementById("plus");
+	var minusOp = document.getElementById("minus");
+	var divideOp = document.getElementById("divide");
+	var multiplyOp = document.getElementById("multiply");
+	var equalsOp = document.getElementById("equals");
+	var resetOp = document.getElementById("btnC");
+	
+	var buttonClick = function(event){
+        if (document.getElementById("operator").value == ""){
+            leftBox += this.value;
+            document.getElementById("left-operand").value = leftBox;
+        } else {
+            rightBox += this.value;
+            document.getElementById("right-operand").value = rightBox;
+        }
+    }
+
+	var operatorsFunction = function (event){
+        operator = document.getElementById("operator").value = this.value;
+    }
+
+    var resetListener = function () {
+  		document.getElementById("operator").value = "";
+		document.getElementById("right-operand").value = "";
+		document.getElementById("left-operand").value = "";
+		leftBox = "";
+		rightBox = "";
+		operator = "";
+    }
+	
+	var equalsOnClick = document.getElementById("equals");
+	equalsOnClick.addEventListener("click", equalsListener, false);
+	function equalsListener () {
+		if (operator == "+") {
+			answer = parseInt(leftBox) + parseInt(rightBox);
+		}
+		else if (operator == "-") {
+			answer = leftBox - rightBox;
+		}
+		else if (operator == "*") {
+			answer = leftBox * rightBox;
+		}
+		else {
+			answer = leftBox / rightBox;
+		}
+		resetListener();
+		document.getElementById("left-operand").value = answer;
+		leftBox = answer;	
+	}
+
+	btn1.addEventListener("click", buttonClick, false);
+	btn2.addEventListener("click", buttonClick, false);
+	btn3.addEventListener("click", buttonClick, false);
+	btn4.addEventListener("click", buttonClick, false);
+	btn5.addEventListener("click", buttonClick, false);
+	btn6.addEventListener("click", buttonClick, false);
+	btn7.addEventListener("click", buttonClick, false);
+	btn8.addEventListener("click", buttonClick, false);
+	btn9.addEventListener("click", buttonClick, false);
+	btn0.addEventListener("click", buttonClick, false);
+	plusOp.addEventListener("click", operatorsFunction, false);
+	minusOp.addEventListener("click", operatorsFunction, false);
+	multiplyOp.addEventListener("click", operatorsFunction, false);
+	divideOp.addEventListener("click", operatorsFunction, false);
+	equals.addEventListener("click", equalsListener(), false);
+	resetOp.addEventListener("click", resetListener, false);
+	resetListener();
+
+	</script>
+</body>
+</html>
+
+
