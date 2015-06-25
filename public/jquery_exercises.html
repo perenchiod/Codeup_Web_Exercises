@@ -4,34 +4,75 @@
 </head>
 <body>
 <div id="htmlBody">
-	<h1 class="codeup">codeuprulez</h1>
+	<h1 class="codeup" id="header1">codeuprulez</h1>
 	<p class="codeup"><strong> Jquery practice </strong> </p>
 	<p id="paragraph"> 
-		<li> <strong>  My food is bread. </strong> </li> 
-		<li>Strawberries</li>
-		<li>Pizza</li>
-		<ul>Unordered popcorn</ul>
-		<ul>unordered corn</ul>
-		<ul>sodas</ul>
+		<ul>
+			<li> <strong>  My food is bread. </strong> </li> 
+			<li>Strawberries</li>
+			<li>Pizza</li>
+			<li>Unordered popcorn </li>
+			<li>unordered corn </li>
+			<li>sodas </li>
+		</ul>
 	</p>
+	<p>
+		paragraph text
+	</P>
 	<div id="codeup" class= "codeup">Div here</div>
 </div>
 
 <script src="/js/jquery.js"></script>
 <script>
 	"use strict";
-
-	$(document).ready(function(){
-		var codeupContent = $(".codeup").text();
-		var htmlContent = $("#htmlBody").text();
-		$(".codeup").css({
-			"border": "3px dotted green"
+	var onOff = false;
+	var konamiValue = 0;
+	$(document).ready(function (){
+		
+		$("h1").click(function() {
+			if(onOff === false)
+			{
+				$(this).css("background-color", "blue");
+				console.log("clicked blue");
+				onOff = true;
+				console.log(onOff);
+			}
+			 else if (onOff == true) {
+				$(this).css("background-color", "white");
+				console.log("clicked");
+				onOff = false;
+			}
 		});
 
-		console.log(codeupContent);
-		console.log(htmlContent);
-	});
+			$("p").dblclick(function () {
+				$(this).css("font-size", "18px");
+				console.log("double click");
+			});
 
+
+		$("li").hover(
+			function () {
+				$(this).css("color" , "red");
+			},
+			function (){
+				$(this).css("color" , "black");
+			}
+		);
+
+
+		$(document).keyup(function(event){
+			konamiValue += event.keyCode;
+            console.log(event.keyCode + " konami :" + konamiValue);
+            if () {
+
+            }
+            else if(konamiValue == 452) {
+            	console.log("The code bro");
+            } else if (konamiValue > 452) {
+            	konamiValue = 0;
+            }
+        });
+	});
 </script>
 
 </body>
