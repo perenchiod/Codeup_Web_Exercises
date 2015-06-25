@@ -1,0 +1,50 @@
+<html>
+<head>
+  <style type="text/css">
+  #map-canvas {
+    width: 640px;
+    height: 750px;
+  }
+  </style>
+</head>
+<body>
+  <!-- div to hold map -->
+  <div id="map-canvas"></div>
+
+  <!-- Load the Google Maps API [DON'T FORGET TO USE A KEY] -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD5k0dryaZgb6OKiYFlEc7wIUj7X_gJb8w"></script>
+
+ <!-- Script to show address on map -->
+ <script type="text/javascript">
+    // Render the map
+    var billMills = { lat: 29.42877375, lng: -98.49156596 }
+    var geocoder = new google.maps.Geocoder();
+    var address = "185 e West Pecan Street, San Antonio, Texas 78205, USA";
+
+    // Geocode our address
+	geocoder.geocode( { 'address': address}, function(results, status) {
+  	// Check for a successful result
+  	if (status == google.maps.GeocoderStatus.OK) {
+	    // Set our map options
+	    var mapOptions = {
+	      // Set the zoom level
+	      zoom: 19,
+	      // This sets the center of the map at our location
+	      center: billMills
+	    }
+	    // Render the map
+	    var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+  		} else {
+    		// Show an error message with the status if our request fails
+    		alert("Geocoding was not successful - STATUS: " + status);
+  		}
+  		var marker = new google.maps.Marker({
+		    position: billMills,
+		    title:"food"
+		});
+		marker.setMap(map);
+  	});
+ </script>
+
+</body>
+</html>

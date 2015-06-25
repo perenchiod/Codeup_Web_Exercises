@@ -4,14 +4,16 @@
 	<link rel="stylesheet" type="text/css" href="/css/calculator.css">
 </head>
 <body>
+	<span></span><h1>Average Calculator</h1>
 	<form name = "Calculator">
 		<div class = "box">
+			<div class = "top-row">
+				<input type= "text" class = "numberBox" id = "left-operand" placeholder = "First number" selected readonly>
+				<input type= "text" class = "operatorBox" id = "operator" placeholder = "Operator" maxlength = "1" readonly>
+				<input type= "text" class = "numberBox" id = "right-operand" placeholder = "Second number" readonly>
+			</div>
 
-			<input type= "text" class = "numberBox" id = "left-operand" placeholder = "First number" selected readonly>
-			<input type= "text" class = "operatorBox" id = "operator" placeholder = "Operator" maxlength = "1" readonly>
-			<input type= "text" class = "numberBox" id = "right-operand" placeholder = "Second number" readonly>
-
-			<button type="button" id= "btn1" value= 1 class = "buttons">1</button>
+			<button type="button" id= "btn1" value= "1" class = "buttons">1</button>
 			<button type="button" id= "btn2" value= 2 class = "buttons">2</button>
 			<button type="button" id= "btn3" value= 3 class = "buttons">3</button>
 			<button type="button" id= "plus" value= + class = "buttons">+</button>
@@ -39,6 +41,7 @@
 	var operator = "";
 	var rightBox = "";
 	var answer = "";
+    var btn0 = document.getElementById("btn0");
 	var btn1 = document.getElementById("btn1");
 	var btn2 = document.getElementById("btn2");
 	var btn3 = document.getElementById("btn3");
@@ -48,15 +51,16 @@
 	var btn7 = document.getElementById("btn7");
 	var btn8 = document.getElementById("btn8");
 	var btn9 = document.getElementById("btn9");
-    var btn0 = document.getElementById("btn0");
 	var plusOp = document.getElementById("plus");
 	var minusOp = document.getElementById("minus");
 	var divideOp = document.getElementById("divide");
 	var multiplyOp = document.getElementById("multiply");
 	var equalsOp = document.getElementById("equals");
 	var resetOp = document.getElementById("btnC");
-	
-	var buttonClick = function(event){
+	var numberButtonArray = [btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9];
+	var operatorArray = [plusOp, minusOp, divideOp, multiplyOp];
+
+	var numbersListener = function(event){
         if (document.getElementById("operator").value == ""){
             leftBox += this.value;
             document.getElementById("left-operand").value = leftBox;
@@ -78,9 +82,8 @@
 		rightBox = "";
 		operator = "";
     }
-	
-	var equalsOnClick = document.getElementById("equals");
-	equalsOnClick.addEventListener("click", equalsListener, false);
+	//Equals function and eventListener. Determines operator's value
+	equalsOp.addEventListener("click", equalsListener);
 	function equalsListener () {
 		if (operator == "+") {
 			answer = parseInt(leftBox) + parseInt(rightBox);
@@ -99,22 +102,18 @@
 		leftBox = answer;	
 	}
 
-	btn1.addEventListener("click", buttonClick, false);
-	btn2.addEventListener("click", buttonClick, false);
-	btn3.addEventListener("click", buttonClick, false);
-	btn4.addEventListener("click", buttonClick, false);
-	btn5.addEventListener("click", buttonClick, false);
-	btn6.addEventListener("click", buttonClick, false);
-	btn7.addEventListener("click", buttonClick, false);
-	btn8.addEventListener("click", buttonClick, false);
-	btn9.addEventListener("click", buttonClick, false);
-	btn0.addEventListener("click", buttonClick, false);
-	plusOp.addEventListener("click", operatorsFunction, false);
-	minusOp.addEventListener("click", operatorsFunction, false);
-	multiplyOp.addEventListener("click", operatorsFunction, false);
-	divideOp.addEventListener("click", operatorsFunction, false);
-	equals.addEventListener("click", equalsListener(), false);
-	resetOp.addEventListener("click", resetListener, false);
+	//For loop for buttons 0-9, adding eventlistener 
+	for(var i = 0; i < 10; i++) {
+		var storeBtn = numberButtonArray[i];	
+		storeBtn.addEventListener("click", numbersListener);
+	}
+	//For loop for operator buttons, added eventlisteners
+	for(var j = 0; j < 4; j++) {
+		var storeOpperators = operatorArray[j];
+		storeOpperators.addEventListener("click", operatorsFunction)
+	}
+	equals.addEventListener("click", equalsListener());
+	resetOp.addEventListener("click", resetListener);
 	resetListener();
 
 	</script>

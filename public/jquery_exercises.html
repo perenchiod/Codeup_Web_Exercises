@@ -1,0 +1,38 @@
+<html>
+<head>
+	<title>Jquery Exercise</title>
+</head>
+<body>
+<div id="htmlBody">
+	<h1 class="codeup">codeuprulez</h1>
+	<p class="codeup"><strong> Jquery practice </strong> </p>
+	<p id="paragraph"> 
+		<li> <strong>  My food is bread. </strong> </li> 
+		<li>Strawberries</li>
+		<li>Pizza</li>
+		<ul>Unordered popcorn</ul>
+		<ul>unordered corn</ul>
+		<ul>sodas</ul>
+	</p>
+	<div id="codeup" class= "codeup">Div here</div>
+</div>
+
+<script src="/js/jquery.js"></script>
+<script>
+	"use strict";
+
+	$(document).ready(function(){
+		var codeupContent = $(".codeup").text();
+		var htmlContent = $("#htmlBody").text();
+		$(".codeup").css({
+			"border": "3px dotted green"
+		});
+
+		console.log(codeupContent);
+		console.log(htmlContent);
+	});
+
+</script>
+
+</body>
+</html>
