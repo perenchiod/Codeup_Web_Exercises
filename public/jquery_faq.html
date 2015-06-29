@@ -50,19 +50,19 @@
 		<dd class = "invisible">Annual visitation ranges between 300,000 and 350,000 visitors per year.</dd>
 
 		<h3 class="parks">Enchanted Rock</h3>
-		<ul id="enchanted-rock">
+		<ul>
 	        <li>More than 400 archeological sites have been found in the park. All are protected, and 120 of them are designated State Archeological Landmarks.</li>
 	        <li>Humans have camped in this area for 12,000 years.</li>
     	</ul>
 
     	<h3 class="parks">Big Bend</h3>
-    	<ul id="big-bend">
+    	<ul>
 	        <li>Highest recorded temp was 114F in 1989.</li>
 	        <li>Total area is 801,163 acres</li>
    		</ul>
 
    		<h3 class="parks">American Samoa</h3>
-		<ul id="american-samoa">
+		<ul>
 	        <li>Lowest recorded temp has been at 59F in 1964.</li>
 	        <li>Created on October 31, 1988</li>
     	</ul>
@@ -74,13 +74,16 @@
 	"use strict";
 	$(document).ready (function () { 
 		$(".toggle").click(function () {
-			$(".invisible").toggle();
+			$(".invisible").fadeToggle(2000);
 		});
+		$("dt").click(function () {
+			$(this).next().fadeToggle();
+		})
 		$("ul").each(function () {
 			$(this).children().first().css("font-weight", "bold");
 		});
 		$(".parks").click(function () {
-			$("li").hide(this);
+			$("li").fadeToggle();
 		});
 
 	});
