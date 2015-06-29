@@ -1,0 +1,91 @@
+<html>
+<head>
+	<title>JQuery FAQ</title>
+</head>
+<body>
+	<dl>
+		<h1>Big Bend FAQ</h1>
+
+		<button class = "toggle">Click to toggle the text</button>
+
+		<h3>Border Crossing</h3>
+		<dt>Is it possible to cross into Mexico from the park?</dt>
+		<dd class = "invisible">Yes, visitors can legally cross into Mexico through the Boquillas Crossing Port of Entry which opened in April 2013. This Class B port of entry is open from 9;00am-6:00pm Wednesday-Sunday.</dd>
+
+		<h3>Cell Phones</h3>
+		<dt>Is cell phone coverage available in the park?</dt>
+		<dd class = "invisible">Coverage in the park is limited and not always dependable. Pay phones can be found in some developed areas.</dd>
+
+		<h3>Fees</h3>
+		<dt>What is the cost of the entrance fee?</dt>
+		<dd class = "invisible">A $20 per vehicle entrance fee is required, or a $10 individual fee, unless you have a park pass. Fees and passes can be purchased at entrance stations or visitor centers.</dd>
+
+		<h3>Fires</h3>
+		<dt>Are campfires allowed?</dt>
+		<dd class = "invisible">Ground fires and wood fires are prohibited throughout Big Bend National Park. Charcoal is allowed in grills in campgrounds. You may have a fire in a fire pan while on a river trip, or use a containerized fuel stove for backpacking.</dd>
+
+		<h3>Fishing</h3>
+		<dt>Is fishing allowed in the park?</dt>
+		<dd class = "invisible">Fishing is allowed in the Rio Grande with a free permit issued from a visitor center.</dd>
+
+		<h3>Fuel</h3>
+		<dt>Are there filling stations in the park?</dt>
+		<dd class = "invisible">Gasoline is available at Panther Junction and Rio Grande Village, and outside the park in Study Butte and Stillwell's Ranch. Diesel is available at Panther Junction and outside the park in Study Butte.</dd>
+
+		<h3>Park Size</h3>
+		<dt>How large is Big Bend National Park?</dt>
+		<dd class = "invisible">At 801,163 acres, Big Bend is the 8th largest national park in the lower 48 states, and the 15th largest in the U.S.</dd>
+
+		<h3>Pets</h3>
+		<dt>Are pets allowed in the park or on trails?</dt>
+		<dd class = "invisible">Pets are not allowed on trails or in the backcountry for the protection of the park, wildlife, hikers, and your pet. Pets are allowed anywhere vehicles can go, such as roads and primitive campsites, but pets must be on a leash and may not be left unattended.</dd>
+
+		<h3>Swimming</h3>
+		<dt>Is swimming allowed in the river?</dt>
+		<dd class = "invisible">Swimming in the Rio Grande is not recommended, as undercurrents, deep holes, sharp objects, micro-organisms, and other hazards exist. Three hours north of the park is Balmorhea State Park, which offers excellent swimming opportunities.
+		</dd>
+
+		<h3>Visitation</h3>
+		<dt>What is the park's annual visitation?</dt>
+		<dd class = "invisible">Annual visitation ranges between 300,000 and 350,000 visitors per year.</dd>
+
+		<h3 class="parks">Enchanted Rock</h3>
+		<ul id="enchanted-rock">
+	        <li>More than 400 archeological sites have been found in the park. All are protected, and 120 of them are designated State Archeological Landmarks.</li>
+	        <li>Humans have camped in this area for 12,000 years.</li>
+    	</ul>
+
+    	<h3 class="parks">Big Bend</h3>
+    	<ul id="big-bend">
+	        <li>Highest recorded temp was 114F in 1989.</li>
+	        <li>Total area is 801,163 acres</li>
+   		</ul>
+
+   		<h3 class="parks">American Samoa</h3>
+		<ul id="american-samoa">
+	        <li>Lowest recorded temp has been at 59F in 1964.</li>
+	        <li>Created on October 31, 1988</li>
+    	</ul>
+
+	</dl>
+
+	<script src="/js/jquery.js"></script>
+	<script>
+	"use strict";
+	$(document).ready (function () { 
+		$(".toggle").click(function () {
+			$(".invisible").toggle();
+		});
+		$("ul").each(function () {
+			$(this).children().first().css("font-weight", "bold");
+		});
+		$(".parks").click(function () {
+			$("li").hide(this);
+		});
+
+	});
+
+
+	</script>
+</body>
+</html>
