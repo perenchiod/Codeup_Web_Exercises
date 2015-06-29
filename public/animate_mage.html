@@ -1,0 +1,91 @@
+<html>
+<head>
+	<title>Animated Mage</title>
+	 <style>
+        html, body {
+            margin: 0px;
+            padding: 0;
+        }                           
+
+        #mage {
+            background-color: #000033;
+            height: 250px;
+            margin: 15px;
+            position: relative;
+            width: 250px;
+        }
+
+    </style>
+</head>
+<body>
+	<p>
+		<button id="btn-up">Up</button>
+		<button id="btn-down">Down</button>
+		<button id="btn-right">Right</button>
+		<button id="btn-left">Left</button>
+		<button id="btn-scale-up">Scale up</button>
+		<button id="btn-scale-down">Scale down</button>
+		<button id="btn-reset">Reset</button>
+	</p>
+
+	<img src = "/img/black_mage.jpg" id = "mage" length = "300" width = "300"> 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script>
+        'use strict';
+        $("document").ready(function () {
+        	var arrows = event.keyCode;
+            (function (){         
+				var upArrow = function () {
+					$("#mage")
+						.animate({top: "-=100" }, 100);
+				}
+
+				$("#btn-right").click(function () {
+					$("#mage")
+						.animate({ right: "-=100" }, 100);
+				});
+
+				$("#btn-down").click(function () {
+					$("#mage")
+						.animate({ top: "+=100" }, 100);
+				});
+
+				$("#btn-left").click(function () {
+					$("#mage")
+						.animate({ right: "+=100" }, 100);
+				});
+
+				$("#btn-scale-down").click(function () {
+                    $("#mage")
+                        .animate({ 
+                        	width: "-=20%"
+                        });
+                });
+
+                $("#btn-scale-up").click(function () {
+                    $("#mage")
+                        .animate({ 
+                        	width: "+=20%"
+                        });
+                });
+
+                $("btn-reset").click(function () {
+                	$("#mage")({
+             			
+                	});
+                });
+
+                switch(arrows) {
+                    case 38:
+                        upArrow();
+                        break;
+
+                }
+
+            })();
+        });
+    
+    </script>
+
+</body>
+</html>
