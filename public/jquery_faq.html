@@ -74,16 +74,16 @@
 	"use strict";
 	$(document).ready (function () { 
 		$(".toggle").click(function () {
-			$(".invisible").fadeToggle(2000);
+			$(".invisible").slideToggle(2000);
 		});
 		$("dt").click(function () {
-			$(this).next().fadeToggle();
+			$(this).next().slideToggle();
 		})
 		$("ul").each(function () {
 			$(this).children().first().css("font-weight", "bold");
 		});
 		$(".parks").click(function () {
-			$("li").fadeToggle();
+			$("li").slideToggle();
 		});
 
 	});
