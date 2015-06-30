@@ -1,0 +1,56 @@
+<html>
+<head>
+    <title>Online Store</title>
+    <style type="text/css"></style>
+    <link rel="stylesheet" href="/css/tableCSS.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+<body>
+<div class="tableBody">
+    <h1>My Tool Store</h1>
+    <table id="products" width="120" class="table table-hover">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Categories</th>
+            </tr>
+        </thead>
+        <tbody id="insertProducts"></tbody>
+    </table>
+    <button id="refresh-btn">Refresh page</button>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script>
+"use strict";
+function refresh() {
+    (function() {
+        var insertText = $("#insertProducts");
+        var inventory = $.ajax({
+            url: "/data/inventory.json",
+            type: "GET"
+            });
+        
+        $("#insertProducts").html("");
+        inventory.done(function (data) {
+            for(var i = 0; i < data.length; i++) {
+                insertText.append("<tr><td>" + data[i].title + "</td>" +
+                    "<td>" + data[i].quantity + "</td>" + 
+                    "<td>" + data[i].price + "</td>" + 
+                    "<td>" + data[i].categories + "</td></tr>");
+            }
+            return data;
+        });
+    })();
+} 
+refresh();
+$("#refresh-btn").click(function() {
+    refresh();
+});
+</script>
+
+</body>
+</html>
