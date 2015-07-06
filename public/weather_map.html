@@ -2,26 +2,33 @@
 <head>
 	<title>Weather Map</title>
 	<link rel="stylesheet" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/css/weather_css.css">
 </head>
 <body>
-	<div class="container">  
-		<h1>Weather Application</h1>
-		<h3 id = "city"></h3>
-		<div id = "tempature"></div>
-		<div id = "weatherIcon"></div>
-		<div id = "clouds"></div>
-		<div id = "humidity"></div>
-		<div id = "wind"></div>
-		<div id = "pressure"></div>
+	<div id= "weatherBody">  
+		<h1>Weather Application Three Day Forecast</h1>
+		<div id = "weatherDays">
+			<h3 id = "city"></h3>
+			<div id = "threeDayForecast"></div>
+		</div>
 	</div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script>
+	<div id="map-canvas"></div>
+	<div class='col-sm-3'>
+		<p>Latitude: <input type="text" id="lat" placeholder="Latitude here"></p>
+		<p>Longitude: <input type="text" id="lng" placeholder="Longitude here"></p>
+		<p><button id="submit">Submit coordinates here</button></p>
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+  	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD5k0dryaZgb6OKiYFlEc7wIUj7X_gJb8w"></script>
+
+<script type="text/javascript">
 	"use strict";
 	var ajaxRequest = $.get("http://api.openweathermap.org/data/2.5/forecast/daily", {
-    APPID: "bfedd25fd6006a68d3cc72fde97c93dd",
-    q:     "Schertz, TX",
-	units: "imperial"	
+	APPID: "bfedd25fd6006a68d3cc72fde97c93dd",
+	q:     "Schertz, TX",
+	units: "imperial"
 	});
 	
 	ajaxRequest.always(function () {
@@ -33,30 +40,65 @@
 		console.log(ajaxRequest.status);
 	});
 
-	ajaxRequest.done(function(data){
-		for(var i = 0; i < 3 ; i++) {
-			var city = data.city.name;
-			var highTemp = data.list[i].temp.max;
-			var lowTemp = data.list[i].temp.min
-			var clouds = data.list[i].weather[0].description;
-			var humidity = data.list[i].humidity;
-			var wind = data.list[i].speed;
-			var weatherIcon = data.list[i].weather[0].icon;
-			var pressure = data.list[i].pressure;
+	function initialize() {
+		var map;
+		var longitude;
+		var latitude;
+		var button = $("#submit");
+		var myLatlng = new google.maps.LatLng(40.713956,-74.006653);
+		var mapOptions = {
+			zoom: 8,
+			center: myLatlng
+		};
+		var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+		var marker = new google.maps.Marker({
+		  	draggable: true,
+		  	position: myLatlng, 
+		  	map: map,
+		  	title: "Your location"
+		});
+        $("#submit").click(function() {
+        	$("#lat").val();
+        	$("#lng").val();
+        });
 
-			$("#tempature").append("<p><strong>High/low </strong><br>" + highTemp + "/" + lowTemp + "</p>");
-			$("#clouds").append("Clouds: " + clouds + " ");
-			$("#humidity").append("Humidity: " + humidity + " ");
-			$("#wind").append("Wind: " + wind + " ");
-			$("#pressure").append("Pressure: " + pressure + " ");
-			$("#weatherIcon").append("<img src= 'http://openweathermap.org/img/w/" + weatherIcon + ".png'>");
-		}
-		$("#city").append("City: " + city);
-		var threeDayForecast = function () {
+		ajaxRequest.done(function(data){
+			data.city.coord.lat = latitude;
+			data.city.coord.lon = longitude;
+			for(var i = 0; i < 3 ; i++) {
+				var city = data.city.name;
+				var highTemp = data.list[i].temp.max;
+				var lowTemp = data.list[i].temp.min;
+				var clouds = data.list[i].weather[0].description;
+				var humidity = data.list[i].humidity;
+				var wind = data.list[i].speed;
+				var weatherIcon = data.list[i].weather[0].icon;
+				var pressure = data.list[i].pressure;
 
-		}
-		console.log(data);
-	});
+				$("#threeDayForecast").append("<p class='bg-primary'><strong>High/low </strong><br>" + highTemp + "/" + lowTemp + "<br>" +
+								"<img src= 'http://openweathermap.org/img/w/" + weatherIcon + ".png'>" + "</p>" +
+								"<p class='bg-info'>" +"Clouds: " + clouds + " " + "</p>" +
+								"<p>" + "Humidity: " + humidity + " " + "</p>" +
+								"<p>" + "Wind: " + wind + " " + "</p>" +
+								"<p>" + "Pressure: " + pressure + " " + "</p>");
+			}
+			$("#city").append("City: " + city);
+			console.log(data);
+		});
+		google.maps.event.addListener(marker, "dragend", function(event) {
+            latitude = event.latLng.lat();
+            longitude = event.latLng.lng();
+            $("#lat").val(latitude);
+            $("#lng").val(longitude);
+			ajaxRequest = $.get("http://api.openweathermap.org/data/2.5/forecast/daily", {
+				APPID: "bfedd25fd6006a68d3cc72fde97c93dd",
+				lat: latitude,
+				lon: longitude,
+				units: "imperial"
+			});
+        });
+	}
+	google.maps.event.addDomListener(window, "load", initialize);
 
 </script>
 </body>
