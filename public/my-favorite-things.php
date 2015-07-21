@@ -1,5 +1,16 @@
-<?
-	$fave5 = ["gaming" , "training" , "thinking" , "eating", "drinking"];
+<?php
+	function favThings() 
+	{
+		return ["gaming" , "training" , "thinking" , "eating", "drinking"];
+		
+	}
+
+	function pageContoller () {
+		$data = [];
+		$data["faves"] = favThings();
+		return $data;
+	}
+	extract(pageContoller());
 ?>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <html>
@@ -11,8 +22,8 @@
 	<table class="table table-striped">
   		
 		<h1>Favorite things<h1>
-		<? foreach ($fave5 as $values): ?>
-			<td><? = $values  ?></td>
+		<? foreach ($faves as $values): ?>
+			<td><? echo $values  ?></td>
 		<? endforeach; ?>
   		
 	</table>
