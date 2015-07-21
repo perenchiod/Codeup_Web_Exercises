@@ -1,4 +1,4 @@
-<?php 
+<?
 	$fave5 = ["gaming" , "training" , "thinking" , "eating", "drinking"];
 ?>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -11,9 +11,9 @@
 	<table class="table table-striped">
   		
 		<h1>Favorite things<h1>
-		<?php foreach ($fave5 as $values) { ?>
-			<h2><?php echo $values  ?><h2>
-		<?php } ?>
+		<? foreach ($fave5 as $values): ?>
+			<td><? = $values  ?></td>
+		<? endforeach; ?>
   		
 	</table>
 </body>
