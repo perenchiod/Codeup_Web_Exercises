@@ -1,13 +1,14 @@
 <?php
+	require "functions.php";
 	session_start();
-	 if(isset($_POST['username']) && isset($_POST['password'])) { 
+	 if(inputHas("username") && inputHas("password")) { 
+		$userVar = escape(inputGet("username"));
+		$passVar = escape(inputGet("password"));
+		$_SESSION["username"] = $userVar;
+		$_SESSION["password"] = $passVar;
 		
-		$_POST['username'] = strtolower($_POST['username']);
-		$_SESSION["username"] = ($_POST['username']);
-		$_SESSION["password"] = $_POST['password'];
-		
-		if($_POST['username'] == 'nightness' && $_POST['password'] == 'alrightalright'){ 
-			header('Location: http://codeup.dev/authorized.php');
+		if($userVar == "night" && $passVar == "pass"){ 
+			header("Location: http://codeup.dev/authorized.php");
 			exit();      
 		} else {
 			$message = "Incorrect username or password";
@@ -28,8 +29,8 @@
         <label>Password</label>
         <input type="password" name="password"><br>
         <input type="submit" href="authorized.php">	
-        <p>Username: <? if(isset($_POST['username'])) { echo htmlspecialchars(strip_tags($_POST['username'])); } ?>  </p>	
-        <p>Password: <? if(isset($_POST['password'])) { echo htmlspecialchars(strip_tags($_POST['password'])); } ?>  </p>	
+        <p>Username: <? if(inputHas("username")) { echo $userVar; } ?>  </p>	
+        <p>Password: <? if(inputHas("password")) { echo $passVar; } ?>  </p>	
     </form>
 </body>
 </html>
