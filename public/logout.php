@@ -1,5 +1,10 @@
 <?php 
 	session_start();
+	require_once "Auth.php";
+	$Auth = new Auth();
+	if(Auth::check()) {
+		Auth::logout();
+	} 
 	function endSession()
 	{
     // Unset all of the session variables.
@@ -17,7 +22,7 @@
 
     // Finally, destroy the session.
     session_destroy();
-    header('Location: http://codeup.dev/login.php');
+    header("Location: http://codeup.dev/login.php");
 	exit(); 
 }
 

@@ -1,19 +1,14 @@
 <?php
-	require "functions.php";
+	require_once "functions.php";
+	require_once "Auth.php";
 	session_start();
+	$Auth = new Auth();
 	 if(inputHas("username") && inputHas("password")) { 
 		$userVar = escape(inputGet("username"));
 		$passVar = escape(inputGet("password"));
+		Auth::attempt($userVar, $passVar);
 		$_SESSION["username"] = $userVar;
 		$_SESSION["password"] = $passVar;
-		
-		if($userVar == "night" && $passVar == "pass"){ 
-			header("Location: http://codeup.dev/authorized.php");
-			exit();      
-		} else {
-			$message = "Incorrect username or password";
-			echo "<script type='text/javascript'> alert('$message'); </script>";
-		}
 	} 
 	
 ?>
