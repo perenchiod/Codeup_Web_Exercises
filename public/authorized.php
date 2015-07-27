@@ -2,7 +2,6 @@
 	require_once "functions.php";
 	require_once "Auth.php";
 	session_start();
-	$Auth = new Auth();
 	if(!Auth::check()) {
 		echo "<script type='text/javascript'> alert('logging out'); </script>";
 		Auth::logout();
