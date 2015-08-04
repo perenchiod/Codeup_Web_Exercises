@@ -5,25 +5,18 @@
 	define("DB_PASS",'');
 	require '../db_connect.php';
 	
-	$parks = $dbc->query('SELECT * FROM national_parks LIMIT 4');
+	$limitVar = 4;
+	$parks = $dbc->query('SELECT * FROM national_parks LIMIT ' . $limitVar);
+	$count = $dbc->query('SELECT count(*) FROM national_parks');
 
 	if(empty($_GET['page'])) {
-		$_GET['page'] = 1;
+		$_GET['page'] = 0;
 	} 
 	
-	if(isset($_GET['direction'])) 
+	if(isset($_GET['page'])) 
 	{
-		if($_GET['direction'] == 'inc') {
-			$inc = $_GET['page'] + 1;
-			$_GET['page'] = $inc;
-			$offsetInc = 4 * ($inc - 1);
-			$parks = $dbc->query('SELECT * FROM national_parks LIMIT 4 OFFSET ' . $offsetInc);
-		} else if ($_GET['direction'] == 'dec') {
-			$dec = $_GET['page'] - 1;
-			$_GET['page'] = $dec;
-			$offsetDec = 4 * $dec;
-			$parks = $dbc->query('SELECT * FROM national_parks LIMIT 4 OFFSET ' . $offsetDec);
-		}
+		$offsetVar = $limitVar * $_GET['page'];
+		$parks = $dbc->query('SELECT * FROM national_parks LIMIT ' . $limitVar . ' OFFSET ' . $offsetVar);
 	}
 
 ?>
@@ -33,27 +26,31 @@
 	<title>National Parks</title>
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/national_parks.css">
 </head>
 <body>
-
+	<h1>Page: <?php echo $_GET['page'];  ?>
 	<table class="table table-striped">
 		<th>Name</th>
 		<th>Location</th>
 		<th>Date Established</th>
 		<th>Area (acres)</th>
-		<?php foreach ($parks as $key => $park) { ?>
+		<?php foreach ($parks as $park) { ?>
 			<tr>
-				<td><?php echo $park['name']; ?></td>
-				<td><?php echo $park['location']; ?></td>
-				<td><?php echo $park['date_established']; ?></td>
-				<td><?php echo $park['area_in_acres']; ?></td>
+				<td><?= $park['name']; ?></td>
+				<td><?= $park['location']; ?></td>
+				<td><?= $park['date_established']; ?></td>
+				<td><?= number_format($park['area_in_acres']); ?></td>
 			</tr>
 		<?php } ?>
 		</tr>
 	</table>
-
-	<a href='http://codeup.dev/national_parks.php?page=<?php if(isset($_GET['page'])){ echo $_GET['page']; } ?>&direction=inc'>Next</a>
-	<a href='http://codeup.dev/national_parks.php?page=<?php if(isset($_GET['page'])){ echo $_GET['page']; } ?>&direction=dec'>Back</a>
+	<?php if(($_GET['page']+1)  <= ($count->fetchColumn() / $limitVar)) { ?>
+		<a id= 'next' href='http://codeup.dev/national_parks.php?page=<?php if(isset($_GET['page'])){ echo $_GET['page']+1; } ?>'>Next</a>
+	<?php } ?>
+	<?php if($_GET['page'] >= 1) { ?>
+		<a id='back' href='http://codeup.dev/national_parks.php?page=<?php if(isset($_GET['page'])){ echo $_GET['page']-1; } ?>'>Back</a>
+	<?php } ?>
 
 </body>
 </html>
