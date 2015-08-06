@@ -1,8 +1,8 @@
 <?php 
-	define("DB_HOST",'127.0.0.1');
-	define("DB_NAME",'parks_db');
-	define("DB_USER",'parks_user');
-	define("DB_PASS",'');
+	define('DB_HOST','127.0.0.1');
+	define('DB_NAME','parks_db');
+	define('DB_USER','parks_user');
+	define('DB_PASS','');
 	require '../db_connect.php';
 	require 'functions.php';
 
@@ -24,16 +24,16 @@
 	}
 
 	//Perpared stmt variable used for inserting data into database
-	$stmt = $dbc->prepare("INSERT INTO national_parks (name,location,date_established,area_in_acres, description) VALUES (
+	$stmt = $dbc->prepare('INSERT INTO national_parks (name,location,date_established,area_in_acres, description) VALUES (
 		:name, 
 		:location, 
 		:date_established, 
 		:area_in_acres, 
 		:description
-	)");
+	)');
 	
-	if(inputHas("name") && inputHas("location") && inputHas("date_established") && inputHas("area_in_acres")) {
-		$nameVar = escape(inputGet("name"));
+	if(inputHas('name') && inputHas('location') && inputHas('date_established') && inputHas('area_in_acres')) {
+		$nameVar = escape(inputGet('name'));
 		$locationVar = escape(inputGet('location'));
 		$establishedVar = escape(inputGet('date_established'));
 		$acresVar = escape(inputGet('area_in_acres'));
@@ -44,7 +44,7 @@
 		$stmt->bindValue(':area_in_acres' , $acresVar , PDO::PARAM_INT);
 		
 		//Conditional checking if a description was entered
-		if(inputHas($_POST['description'])) {
+		if(inputHas('description')) {
 			$descriptionVar = escape(inputGet('description'));
 			$stmt->bindValue(':description' , $_POST['description'] , PDO::PARAM_STR);
 		} else {
@@ -54,51 +54,53 @@
 		$stmt->execute();
 	}
 ?>
-
 <html>
 <head>
 	<title>National Parks</title>
 	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="/css/national_parks.css">
+	<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
+	<link rel='stylesheet' type='text/css' href='/css/national_parks.css'>
 </head>
 <body>
 	<h1>National Parks! </h1>
-	<table class="table table-striped">
+	<table class='table table-striped'>
 		<th>Name</th>
 		<th>Location</th>
 		<th>Date Established (year/month/day)</th>
 		<th>Area (acres)</th>
+		<th>Description</th>
 		<?php foreach ($parks as $park) { ?>
 			<tr>
 				<td><?= $park['name']; ?></td>
 				<td><?= $park['location']; ?></td>
 				<td><?= $park['date_established']; ?></td>
 				<td><?= number_format($park['area_in_acres']); ?></td>
+				<td><?= $park['description'] ?></td>
 			</tr>
 		<?php } ?>
 		</tr>
 	</table>
-	<?php if(($_GET['page']+1)  <= ($count->fetchColumn() / $limitVar)) { ?>
+	<?php if(($_GET['page']+1)  < ($count->fetchColumn() / $limitVar)) { ?>
 		<a id= 'next' href='http://codeup.dev/national_parks.php?page=<?php if(isset($_GET['page'])){ echo $_GET['page']+1; } ?>'>Next</a>
 	<?php } ?>
 	<?php if($_GET['page'] >= 1) { ?>
 		<a id='back' href='http://codeup.dev/national_parks.php?page=<?php if(isset($_GET['page'])){ echo $_GET['page']-1; } ?>'>Back</a>
 	<?php } ?>
-	<form method="POST">
+	<form method='POST'>
 		<h3>Park name</h3>
-		<input type="text" class="input" name="name" placeholder="Park name"> <br>
+		<input type='text' class='input' name='name' placeholder='Name'> <br>
 		<h3>Location of park</h3>
-		<input type="text" class="input" name="location" placeholder="Location of park"> <br>
+		<input type='text' class='input' name='location' placeholder='Location'> <br>
 		<h3>Date park was founded, Year/Mounth/Day</h3>
-		<input type="text" class="input" name="date_established" placeholder="Date park establishment"> <br>
+		<input type='text' class='input' name='date_established' placeholder='Date'> <br>
 		<h3>Acres of park</h3>
-		<input type="text" class="input" name="area_in_acres" placeholder="Area of park in acres"> <br>
-		<input type="textarea" class="input" name="description" placeholder="Description"> <br>
-		<input type="submit">
+		<input type='text' class='input' name='area_in_acres' placeholder='Acres'> <br>
+		<h3>Description of park</h3>
+		<textarea class='form-control' rows='7'  name='description' placeholder='Description'></textarea> <br>
+		<input type='submit'>
 	</form>
 
-	<p><? if(inputHas("name")) { echo $_POST['name']; } ?>  </p>	
-	<p><? if(inputHas("location")) { echo $_POST['location']; } ?>  </p>	
+	<p><? if(inputHas('name')) { echo $_POST['name']; } ?>  </p>	
+	<p><? if(inputHas('location')) { echo $_POST['location']; } ?>  </p>	
 </body>
 </html>
