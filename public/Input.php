@@ -27,9 +27,48 @@ class Input
     public static function get($key, $default = null)
     {
         if(isset($key)) {
-            return $_GET[$key];
+            return $_POST[$key];
         } else {
             return $default;
+        }
+    }
+
+    public static function getString($key)
+    {   
+        $variable = trim(static::get($key));
+        if(!isset($variable)) {
+            throw new Exception('Variable is not set');
+        } 
+        if(!is_string($variable)) {
+            throw new Exception('Variable is not a string');
+            
+        }
+        return $variable;
+    }
+
+    public static function getNumber($key)
+    {   
+        $variable = str_replace(',', '', static::get($key));
+        if(!isset($variable)) {
+            throw new Exception('Variable is not set');
+        }
+        
+        
+        return $variable;
+
+        
+    }
+    public static function getDate($key) 
+    {   
+        $variable = static::get($key);
+        $format = 'Y-m-d';
+        $dateObject = DateTime::createFromFormat($format, $variable);
+        
+        if($dateObject) {
+            $dateString = $dateObject->date;
+            return $dateString;
+        } else {
+            throw new Exception ('Variable is not a date format');
         }
     }
 
@@ -41,3 +80,4 @@ class Input
     ///////////////////////////////////////////////////////////////////////////
     private function __construct() {}
 }
+
