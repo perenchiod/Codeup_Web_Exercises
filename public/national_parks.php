@@ -29,44 +29,69 @@
 		$parks = $dbc->query('SELECT * FROM national_parks LIMIT ' . $limitVar . ' OFFSET ' . $offsetVar);
 	}
 	
+	$stmt = $dbc->prepare('INSERT INTO national_parks (name,location,date_established,area_in_acres, description) VALUES (
+		:name, 
+		:location, 
+		:date_established, 
+		:area_in_acres, 
+		:description
+	)');
 
 	if(inputHas('name') && inputHas('location') && inputHas('date_established') && inputHas('area_in_acres')) {
+		$nameVar = escape(inputGet('name'));
+		$locationVar = escape(inputGet('location'));
+		$establishedVar = escape(inputGet('date_established'));
+		$acresVar = escape(inputGet('area_in_acres'));
+		$stmt->bindValue(':name' , $nameVar , PDO::PARAM_STR);
+		$stmt->bindValue(':location' , $locationVar , PDO::PARAM_STR);
+		$stmt->bindValue(':date_established' , $establishedVar , PDO::PARAM_STR);
+		$stmt->bindValue(':area_in_acres' , $acresVar , PDO::PARAM_INT);
+
+		//Conditional checking if a description was entered
+		if(inputHas('description')) {
+			$descriptionVar = escape(inputGet('description'));
+			$stmt->bindValue(':description' , $_POST['description'] , PDO::PARAM_STR);
+		} else {
+			$stmt->bindValue(':description' , 'none' , PDO::PARAM_STR);
+		}
+
 		$park = new park();
 		try {
-			$park->name = Input::getString('name');
-		} catch(Exception $e) {
-			$errors[] = 'Error with name';
+			$park->name = Input::has('name') ? Input::getString('name',80) : null;
+		} catch(InvalidArgumentException $e) {
+			 array_push( $errors, $e->getMessage());
+		} catch(LengthException $e) {
+			 array_push( $errors, $e->getMessage());			
 		}
 
 		try {
-			$park->location = Input::getString('location');
+			$park->location = Input::has('location') ? Input::getString('location',130) : null;
 		} catch(Exception $e) {
-			$errors[] = 'Error with location';
+			 array_push( $errors, $e->getMessage());
+		} catch(InvalidArgumentException $e) {
+			 array_push( $errors, $e->getMessage());
+		} catch(LengthException $e) {
+			 array_push( $errors, $e->getMessage());
 		}
-
 		try {
-			$park->date_established = Input::getString('date_established');
+			$park->date_established = Input::has('date_established') ? Input::getString('date_established',15) : null;
 		} catch(Exception $e) {
-			$errors[] = 'Error with date established';
+			 array_push( $errors, $e->getMessage());
+		} catch(InvalidArgumentException $e) {
+			 array_push( $errors, $e->getMessage());
+		} catch(LengthException $e) {
+			 array_push( $errors, $e->getMessage());
 		}
-		
 		try {
-			$park->area_in_acres = Input::getNumber('area_in_acres');
-		} catch(Exception $e) {
-			$errors[] = 'Error with area in acres';
+			$park->area_in_acres = Input::has('area_in_acres') ? Input::getNumber('area_in_acres',13) : null;
+		} catch(InvalidArgumentException $e) {
+			 array_push( $errors, $e->getMessage());
+		} catch(RangeException $e) {
+			 array_push( $errors, $e->getMessage());
 		}
-		
-		$park->update();
-		
-		//Conditional checking if a description was entered
-		// if(inputHas('description')) {
-		// 	$descriptionVar = escape(inputGet('description'));
-		// 	$stmt->bindValue(':description' , $_POST['description'] , PDO::PARAM_STR);
-		// } else {
-		// 	$stmt->bindValue(':description' , 'none' , PDO::PARAM_STR);
-		// }
-		// //Execute the stmt, this will give me a new entry in database
-		// $stmt->execute();
+				
+		//Execute the stmt, this will give me a new entry in database
+		$stmt->execute();
 	}
 ?>
 <html>
@@ -79,6 +104,7 @@
 </head>
 <body>
 	<h1>National Parks! </h1>
+	<h2><?php if(!empty($errors)) { var_dump($errors); }   ?>
 	<table class='table table-striped'>
 		<th>Name</th>
 		<th>Location</th>
@@ -131,7 +157,7 @@
 	<span id="parksDisplayed">Change the number of parks displayed! (Currect parks is: <strong> <? echo $coulumnCount ?> </strong> )</span>
 	
 	<form method='GET'>
-		<input type='text' name='limit' value = '4'>
+		<input type='text' name='limit' value = '4' id='offsetBox'>
 		<input type='submit' name='submitOffset'>
 	</form>
 
