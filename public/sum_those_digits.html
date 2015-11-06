@@ -1,0 +1,305 @@
+<html>
+<head>
+	<title>Sum those digits</title>
+	<script src="/js/jquery.js"></script>
+	<script src="/js/angular.min.js"></script>
+	<script src="sum_those_digits.js"></script>
+</head>
+<body ng-app="NumberMan">
+	<!-- Sum those digits challenge -->
+	<h3>Enter an integer</h3>
+	<p>This number will have its digits added into a numbered sum</p>
+	<input id="digitInput" type="number" ng-model="output">
+	<button id="calculateNumber">Calculate</button> <br>
+	<div id="sumOutput"></div>
+	<br> <br>
+	
+	<!-- Generate password challenge -->
+	<h3>------------Generate a random password----------------</h3>
+	<form id="passwordForm" name="passwordForm">
+		<div> Enter the number of charecters
+			<input id="passwordLength" ngMaxlength="3"> 
+		</div>
+		<div>Enter the number of special charecters (if wanted)
+			<input id="specialNumber" value="0"> 
+		</div>
+		<div>Enter the number of digits (if wanted)
+			<input id="digitsWanted" value="0"> 
+		</div>
+		Lowercase:<input type="radio" value="lowercase" name="passwordRadio">
+		Uppercase:<input type="radio" value="uppercase" name="passwordRadio"> 
+		Both:<input type="radio" value="both" checked="checked" name="passwordRadio"> <br>
+		<button id="generatePassword">Generate password</button>
+	</form>
+	Password: <div id="passwordOutput"></div> <br>
+	<h3>Narcissistic Numbers</h3>
+	<div>Click to run the narcissistic numbers program, 25 of the first numbers will appear in the console.
+		<br>
+		<button id="NNumbers">Click here</button>   
+	</div>
+	<h3>-----------------Maximum Subsequence Sum--------------------</h3>
+	<input id="sequenceInput"> <button id="sequenceButton">Submit number</button> <br>
+	<button id="submitSequence">Calculate Sequence</button>
+	<div id="sequenceOutput"></div>
+
+	<h3>-----------------String reversal--------------------</h3>
+	<input id="stringReversal">
+	<button id="submitReversal">Reverse</button>
+	<div id="reversedString"></div>
+
+
+
+	<script>
+		$(document).ready(function() {
+			//Maximum subsequence sum 
+			inputSequence = [];
+
+			$('#submitReversal').click(function(){
+				userString = $('#stringReversal').val();
+				reversedString = '';
+				for (var i = userString.length - 1; i >= 0; i--) {
+					reversedString += userString[i];
+				};
+				$('#reversedString').text(reversedString);
+			});
+
+			$('#sequenceButton').click(function(){
+				input1 = $('#sequenceInput').val();
+				inputSequence.push(input1);
+				$('#sequenceOutput').text(inputSequence);
+				
+			});
+
+			// Runs when wanting to calculate digit challenge
+			$('#calculateNumber').click(function(){
+
+				var inputNum = $('#digitInput').val();
+				var sum1 = 0;
+				
+				if(inputNum > 0) {
+					var inputLength = inputNum.length;
+					for(var i = 0; i < inputLength; i++) {
+						sum1 = parseInt(sum1) + parseInt(inputNum.charAt(i));
+					}
+					$('#sumOutput').text(sum1);
+				}
+			});
+			// Runs when wanting to generate a random password with users criteria
+			$('#generatePassword').click(function(){
+				var passwordLength = parseInt($('#passwordLength').val());
+				var specialNumber = parseInt($('#specialNumber').val());
+				var digitsWanted = parseInt($('#digitsWanted').val());
+				var caseSelected = $('input[name=passwordRadio]:checked', '#passwordForm').val();
+				var bothCases = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				var upperCase1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+				var lowerCase1 = 'abcdefghijklmnopqrstuvwxyz';	
+				var digitString = '0123456789';
+				var specialString = '!@#$%^&*()_+-=;:?><,./{}|`~';
+				var requestedCharecters = specialNumber + digitsWanted;
+				if(passwordLength > 1){
+					if (specialNumber > passwordLength || digitsWanted > passwordLength || requestedCharecters > passwordLength) {
+						return;
+					} else {
+						var luckyPassword = '';
+						
+						for(var i = 0; i < specialNumber; i++) {
+							luckyPassword += specialString.charAt(Math.floor(Math.random() * specialString.length));
+							passwordLength--;
+						}
+
+						for(var i = 0; i < digitsWanted; i++) {
+							luckyPassword += digitString.charAt(Math.floor(Math.random() * digitString.length));
+							passwordLength--;
+						}
+
+						for(var i = passwordLength; i > 0; i--) {
+							if(caseSelected == 'both') {
+								luckyPassword += bothCases.charAt(Math.floor(Math.random() * bothCases.length));
+							} else if(caseSelected == 'lowercase') {
+								luckyPassword += lowerCase1.charAt(Math.floor(Math.random() * lowerCase1.length));
+							} else {
+								luckyPassword += upperCase1.charAt(Math.floor(Math.random() * upperCase1.length));
+							}
+						}
+						//Var that'll store the finalized random password
+						var randomizedPassword = "";
+
+						for(var i = luckyPassword.length; i > 0; i--) {
+							var randomNumber = Math.floor(Math.random() * i);
+							var chosenChar = luckyPassword.charAt(randomNumber);
+							randomizedPassword += chosenChar;
+							luckyPassword = luckyPassword.replace(chosenChar, "");
+							chosenChar = "";
+						}
+						//Displaying the password output on page
+
+						$('#passwordOutput').text(randomizedPassword);
+					}
+				}
+			});
+			
+			$('#NNumbers').click(function(){
+				//Narcissistic Numbers
+				var numberArray = [];
+				var int25 = 0;
+
+				//1 digit checking
+				for(var int1 = 0; int1 < 10; int1++) {
+					var intTotal = int1;
+					var sumTotal = Math.pow(int1 , 1); 
+
+					if(sumTotal == int1) {
+						
+						numberArray.push(sumTotal);
+						int25++;
+
+						//Stopping when 25 numbers have been met
+						if(int25 == 25){
+							return;
+						}
+					}
+
+					//2 digit checking
+					for(var int2 = 0; int2 < 10; int2++) {
+						var intTotal = String(int1) + String(int2);
+						var sumTotal = Math.pow(int1 , 2) + Math.pow(int2 , 2); 
+
+						if(sumTotal == intTotal) {
+							//continuing if first digit is 0
+							if(int1 == 0) {
+								continue;
+							}
+							//returning if 0 or 1
+							if(sumTotal == 0 || sumTotal == 1) {
+								continue;
+							}
+
+							
+							numberArray.push(sumTotal);
+							int25++;
+						}
+
+						//3 digit checking
+						for(var int3 = 0; int3 < 10; int3++) {
+							var intTotal = String(int1) + String(int2) + String(int3);
+							var sumTotal = Math.pow(int1 , 3) + Math.pow(int2 , 3) + Math.pow(int3 , 3); 
+							if(sumTotal == intTotal) {
+								//continuing if first digit is 0
+								if(int1 == 0) {
+									continue;
+								}
+								//continue if 0 or 1
+								if(sumTotal == 0 || sumTotal == 1) {
+									continue;
+								}
+
+								numberArray.push(sumTotal);
+								
+								int25++
+								//Stopping when 25 numbers have been met
+								if(int25 == 25){
+									return;
+								}
+							}
+							//4 digit checking 
+							for(int4 = 0; int4 < 10; int4++) {
+								var intTotal = String(int1) + String(int2) + String(int3) + String(int4);
+								var sumTotal = Math.pow(int1 , 4) + Math.pow(int2 , 4) + Math.pow(int3 , 4) + Math.pow(int4, 4); 
+								if(sumTotal == intTotal) {
+									//continuing if first digit is 0
+									if(int1 == 0) {
+										continue;
+									}
+									//continue if 0 or 1
+									if(sumTotal == 0 || sumTotal == 1) {
+										continue;
+									}
+
+									
+									numberArray.push(sumTotal);
+									int25++
+									//Stopping when 25 numbers have been met
+									if(int25 == 25){
+										return;
+									}
+								}
+
+								for(int5 = 0; int5 < 10; int5++) {
+									var intTotal = String(int1) + String(int2) + String(int3) + String(int4) + String(int5);
+									var sumTotal = Math.pow(int1 , 5) + Math.pow(int2 , 5) + Math.pow(int3 , 5) + Math.pow(int4, 5) + Math.pow(int5, 5); 
+									if(sumTotal == intTotal) {
+										//continuing if first digit is 0
+										if(int1 == 0) {
+											continue;
+										}
+										//continue if 0 or 1
+										if(sumTotal == 0 || sumTotal == 1) {
+											continue;
+										}
+
+										
+										numberArray.push(sumTotal);
+										int25++
+										//Stopping when 25 numbers have been met
+										if(int25 == 25){
+											return;
+										}
+									}
+									
+									for(int6 = 0; int6 < 10; int6++) {
+										var intTotal = String(int1) + String(int2) + String(int3) + String(int4) + String(int5) + String(int6);
+										var sumTotal = Math.pow(int1 , 6) + Math.pow(int2 , 6) + Math.pow(int3 , 6) + Math.pow(int4, 6) + Math.pow(int5, 6) + Math.pow(int6, 6); 
+										if(sumTotal == intTotal) {
+											//continuing if first digit is 0
+											if(int1 == 0) {
+												continue;
+											}
+											//continue if 0 or 1
+											if(sumTotal == 0 || sumTotal == 1) {
+												continue;
+											}
+
+											
+											numberArray.push(sumTotal);
+											int25++
+											//Stopping when 25 numbers have been met
+											if(int25 == 25){
+												return;
+											}
+										}
+
+										for(int7 = 0; int7 < 10; int7++) {
+											var intTotal = String(int1) + String(int2) + String(int3) + String(int4) + String(int5) + String(int6) + String(int7);
+											var sumTotal = Math.pow(int1 , 7) + Math.pow(int2 , 7) + Math.pow(int3 , 7) + Math.pow(int4, 7) + Math.pow(int5, 7) + Math.pow(int6, 7) + Math.pow(int7, 7); 
+											if(sumTotal == intTotal) {
+												//continuing if first digit is 0
+												if(int1 == 0) {
+													continue;
+												}
+												//continue if 0 or 1
+												if(sumTotal == 0 || sumTotal == 1) {
+													continue;
+												}
+
+												
+												numberArray.push(sumTotal);
+												int25++;
+												//Stopping when 25 numbers have been met
+												if(int25 == 25){
+													console.log('Grats! 25 done');
+													console.log(numberArray);
+													return;
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			});
+		});
+	</script>
+</body>
+</html>
